@@ -2,22 +2,22 @@
 universe = vanilla
 #
 #--- Only for CMSConnect
-+ProjectName = "cms.org.baylor"
-+DESIRED_Sites="T3_US_Baylor"
-+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel6"
-+REQUIRED_OS = "rhel6"
-+SingularityBindCVMFS = True
-Requirements = HAS_SINGULARITY == True
+#+ProjectName = "cms.org.baylor"
+#+DESIRED_Sites="T3_US_Baylor"
+#+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel6"
+#+REQUIRED_OS = "rhel6"
+#+SingularityBindCVMFS = True
+#Requirements = HAS_SINGULARITY == True
 #--- The section for CMSConnect ends
 #
 #--- Only for local condor submission
-#x509userproxy = $ENV(X509_USER_PROXY)
+x509userproxy = $ENV(X509_USER_PROXY)
 #--- The session for local condor ends
 #
 Executable = cmsRun.csh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = cmsRun.csh, run_HcalTupleMaker_2018_MCfull.py
+Transfer_Input_Files = cmsRun.csh, run_HcalTupleMaker_2019_PF.py
 Output = log/condorjob_$(Cluster)_$(Process).stdout
 Error = log/condorjob_$(Cluster)_$(Process).stdout
 Log = log/condorjob_$(Cluster)_$(Process).log

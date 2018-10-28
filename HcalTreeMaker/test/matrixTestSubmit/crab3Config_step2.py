@@ -15,9 +15,9 @@ config.JobType.allowUndistributedCMSSW = True
 config.section_("Data")
 # MC example
 config.Data.inputDBS = 'https://cmsweb.cern.ch/dbs/prod/phys03/DBSReader/'
-config.Data.inputDataset = '/TTbar_14TeV/hatake-CMSSW_10_3_0_pre1_Step1_v1-1d94015c49f0b857fbb3502bf6e93b08/USER'
+config.Data.inputDataset = '/SingleK0L/hatake-CMSSW_10_3_0_pre6_Step1_v1-6eb77e2b3b3a1796e14509a6508ddaad/USER'
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 1
+config.Data.unitsPerJob = 2
 #KH config.Data.totalUnits = 100
 # MC example ends
 # Data example

@@ -190,118 +190,41 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
    cout << "[Hcal analyzer] The number of entries is: " << nentries << endl;
 
    //
-   // TMVA related
-   //
-   // https://root.cern.ch/doc/v606/TMVARegression_8C_source.html
-   // https://root.cern.ch/doc/v608/TMVARegression_8C.html
-   // 
-   
-   // Create a new root output file
-   TString outfileName( "TMVAReg.root" );
-   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
-   // Create the factory object. Later you can choose the methods
-   // whose performance you'd like to investigate. The factory will
-   // then run the performance analysis for you.
-   //
-   // The first argument is the base of the name of all the
-   // weightfiles in the directory weight/
-   //
-   // The second argument is the output file for the training results
-   // All TMVA output can be suppressed by removing the "!" (not) in
-   // front of the "Silent" argument in the option string
-   TMVA::Factory *factory = new TMVA::Factory( "TMVARegression", outputFile,
-                                               "!V:!Silent:Color:DrawProgressBar:AnalysisType=Regression" );
-   TMVA::DataLoader *dataloader=new TMVA::DataLoader("dataset");
-   // If you wish to modify default settings
-   // (please check "src/Config.h" to see all available global options)
-   //
-   //     (TMVA::gConfig().GetVariablePlotting()).fTimesRMS = 8.0;
-   //     (TMVA::gConfig().GetIONames()).fWeightFileDir = "myWeightDirectory";  
 
-   // Define the input variables that shall be used for the MVA training
-   // note that you may also use variable expressions, such as: "3*var1/var2*abs(var3)"
-   // [all types of expressions that can also be parsed by TTree::Draw( "expression" )]
-   dataloader->AddVariable( "var1", "Variable 1", "units", 'F' );
-   dataloader->AddVariable( "var2", "Variable 2", "units", 'F' );
+   //TString outfileName2( "SingleK0L.root" );
+   //TFile* outputFile2 = TFile::Open( outfileName2, "RECREATE" ); 
 
-   // Add the variable carrying the regression target
-   dataloader->AddTarget( "fvalue" );
+   TTree t1("t1","a simple Tree with simple variables");
+ 
+   // Create one branch. If splitlevel is set, event is a superbranch
+   // creating a sub branch for each data member of the Event object.
 
-   // Read training and test data (see TMVAClassification for reading ASCII files)
-   // load the signal and background event samples from ROOT trees
-   TFile *input(0);
-   TString fname = "./tmva_reg_example.root";
-   if (!gSystem->AccessPathName( fname )) 
-     input = TFile::Open( fname ); // check if file in local directory exists
-   else 
-     input = TFile::Open( "http://root.cern.ch/files/tmva_reg_example.root" ); // if not: download from ROOT server
-   
-   if (!input) {
-     std::cout << "ERROR: could not open data file" << std::endl;
-     exit(1);
-   }
-   std::cout << "--- TMVARegression           : Using input file: " << input->GetName() << std::endl;
-   
-   // --- Register the regression tree
-   
-   TTree *regTree = (TTree*)input->Get("TreeR");
-   
-   // global event weights per tree (see below for setting event-wise weights)
-   Double_t regWeight  = 1.0;   
-   
-   // You can add an arbitrary number of regression trees
-   dataloader->AddRegressionTree( regTree, regWeight );
-   
-   // This would set individual event weights (the variables defined in the 
-   // expression need to exist in the original TTree)
-   dataloader->SetWeightExpression( "var1", "Regression" );
-   
-   // Apply additional cuts on the signal and background samples (can be different)
-   TCut mycut = ""; // for example: TCut mycut = "abs(var1)<0.5 && abs(var2-0.5)<1";
-   
-   // tell the factory to use all remaining events in the trees after training for testing:
-   dataloader->PrepareTrainingAndTestTree( mycut, 
-                                            "nTrain_Regression=1000:nTest_Regression=0:SplitMode=Random:NormMode=NumEvents:!V" );
-   // factory->PrepareTrainingAndTestTree( mycut, 
-   //                                      "nTrain_Regression=0:nTest_Regression=0:SplitMode=Random:NormMode=NumEvents:!V" );
-   
-   // If no numbers of events are given, half of the events in the tree are used 
-   // for training, and the other half for testing:
-   //    factory->PrepareTrainingAndTestTree( mycut, "SplitMode=random:!V" );  
+   Float_t gen_pt, gen_e, gen_eta, gen_phi;   
+   t1.Branch("gen_pt", &gen_pt, "gen_pt/F");
+   t1.Branch("gen_e",  &gen_e,  "gen_e/F");
+   t1.Branch("gen_eta",&gen_eta,"gen_eta/F");
+   t1.Branch("gen_phi",&gen_phi,"gen_phi/F");
 
-   // PDE - RS method
-   //if (Use["PDERS"])
-   //factory->BookMethod( TMVA::Types::kPDERS, "PDERS", 
-   //			"!H:!V:NormTree=T:VolumeRangeMode=Adaptive:KernelEstimator=Gauss:GaussSigma=0.3:NEventsMin=40:NEventsMax=60:VarTransform=None" );
-   // And the options strings for the MinMax and RMS methods, respectively:
-   //      "!H:!V:VolumeRangeMode=MinMax:DeltaFrac=0.2:KernelEstimator=Gauss:GaussSigma=0.3" );   
-   //      "!H:!V:VolumeRangeMode=RMS:DeltaFrac=3:KernelEstimator=Gauss:GaussSigma=0.3" );   
+   Float_t pf_pt, pf_e, pf_eta, pf_phi;   
+   t1.Branch("pf_pt", &pf_pt, "pf_pt/F");
+   t1.Branch("pf_e",  &pf_e,  "pf_e/F");
+   t1.Branch("pf_eta",&pf_eta,"pf_eta/F");
+   t1.Branch("pf_phi",&pf_phi,"pf_phi/F");
 
-   factory->BookMethod( dataloader,  TMVA::Types::kLD, "LD",
-			"!H:!V:VarTransform=None" );
+   Float_t npf, npf_nh;
+   t1.Branch("npf",   &npf,   "npf/F");
+   t1.Branch("npf_nh",&npf_nh,"npf_nh/F");
    
-   // --------------------------------------------------------------------------------------------------
-  
-   // ---- Now you can tell the factory to train, test, and evaluate the MVAs
-  
-   // Train MVAs using the set of training events
-   factory->TrainAllMethods();
-   
-   // ---- Evaluate all MVAs using the set of test events
-   factory->TestAllMethods();
-   
-   // ----- Evaluate and compare performance of all configured MVAs
-   factory->EvaluateAllMethods();    
-   
-   // --------------------------------------------------------------
-  
-   // Save the output
-   outputFile->Close();
-  
-   std::cout << "==> Wrote root file: " << outputFile->GetName() << std::endl;
-   std::cout << "==> TMVARegression is done!" << std::endl;      
-  
-   delete factory;
+   Float_t pf_ecalFrac, pf_hcalFrac, pf_hcalFrac1, pf_hcalFrac2, pf_hcalFrac3, pf_hcalFrac4, pf_hcalFrac5, pf_hcalFrac6, pf_hcalFrac7;
+   t1.Branch("pf_ecalFrac",&pf_ecalFrac,"pf_ecalFrac/F");
+   t1.Branch("pf_hcalFrac",&pf_hcalFrac,"pf_hcalFrac/F");
+   t1.Branch("pf_hcalFrac1",&pf_hcalFrac1,"pf_hcalFrac1/F");
+   t1.Branch("pf_hcalFrac2",&pf_hcalFrac2,"pf_hcalFrac2/F");
+   t1.Branch("pf_hcalFrac3",&pf_hcalFrac3,"pf_hcalFrac3/F");
+   t1.Branch("pf_hcalFrac4",&pf_hcalFrac4,"pf_hcalFrac4/F");
+   t1.Branch("pf_hcalFrac5",&pf_hcalFrac5,"pf_hcalFrac5/F");
+   t1.Branch("pf_hcalFrac6",&pf_hcalFrac6,"pf_hcalFrac6/F");
+   t1.Branch("pf_hcalFrac7",&pf_hcalFrac7,"pf_hcalFrac7/F");
    
    //---------------------------------------------------------------------------------------------------------
    // main event loop
@@ -314,7 +237,124 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
      ievent++;
      if(ievent%10==0) cout << "[HCAL analyzer] Processed " << ievent << " out of " << nentries << " events" << endl; 
      if (maxevents>0 && ievent>maxevents) break;
+
+     bool debug=false;
      
+     //--------------------
+     // Loop over GEN particles
+     //--------------------
+     for (int ipar = 0, npar =  GenParPt.GetSize(); ipar < npar; ++ipar) {
+     if (GenParPdgId[ipar]==130){
+	 //std::cout << GenParPdgId[ipar] << std::endl;
+       
+       if (debug) printf("ipar,pt,eta,phi:      %4d %8.2f %8.2f %8.2f %8.2f %5d\n",ipar,GenParPt[ipar],GenParEta[ipar],GenParPhi[ipar],GenParM[ipar],GenParPdgId[ipar]);
+       TLorentzVector tlv_k0l; tlv_k0l.SetPtEtaPhiM(GenParPt[ipar],GenParEta[ipar],GenParPhi[ipar],GenParM[ipar]);
+
+       gen_pt  = GenParPt[ipar];
+       gen_e   = tlv_k0l.E();
+       gen_eta = GenParEta[ipar];
+       gen_phi = GenParPhi[ipar];
+       
+       //--------------------
+       // Loop over PF candidates
+       //--------------------
+       TLorentzVector tlv_pf_sum(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_ecal(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal1(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal2(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal3(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal4(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal5(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal6(0.,0.,0.,0.);
+       TLorentzVector tlv_pf_sum_hcal7(0.,0.,0.,0.);
+       bool has_charge = false;
+       bool has_photon = false;
+       int Npf=0;
+       int Npf_nh=0;
+       for (int ipfcand = 0, npfcand =  PFParPt.GetSize(); ipfcand < npfcand; ++ipfcand) {
+	 TLorentzVector tlv_pf; tlv_pf.SetPtEtaPhiM(PFParPt[ipfcand],PFParEta[ipfcand],PFParPhi[ipfcand],PFParM[ipfcand]);
+
+	 /*
+	 if (fabs(PFParEta[ipfcand])>2.5 && fabs(PFParEta[ipfcand])<2.8 && tlv_k0l.DeltaR(tlv_pf)<0.1){
+	   printf("aaa  ipfcand,pt,eta,phi: %10d %4d %8.2f %8.2f %8.2f %8.2f %5d\n",ievent,ipfcand,PFParPt[ipfcand],PFParEta[ipfcand],PFParPhi[ipfcand],PFParM[ipfcand],PFParPdgId[ipfcand]);
+	   std::cout << PFParTrackPt[ipfcand] << " " << PFParEcalEnergyFrac[ipfcand] << " "
+		     << PFParHcalEnergyFrac[ipfcand] << " " << PFParHOEnergyFrac[ipfcand] << std::endl;
+	 }
+	 */
+
+	 //if (fabs(PFParPdgId[ipfcand])!=5) continue;
+	 if (tlv_k0l.DeltaR(tlv_pf)<0.1){
+	   Npf++;	   
+	   if (fabs(PFParPdgId[ipfcand])==5) Npf_nh++;
+	   tlv_pf_sum+=tlv_pf;
+	   tlv_pf_sum_ecal+=tlv_pf*PFParEcalEnergyFrac[ipfcand];
+	   tlv_pf_sum_hcal+=tlv_pf*PFParHcalEnergyFrac[ipfcand];
+	   tlv_pf_sum_hcal1+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac1[ipfcand];
+	   tlv_pf_sum_hcal2+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac2[ipfcand];
+	   tlv_pf_sum_hcal3+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac3[ipfcand];
+	   tlv_pf_sum_hcal4+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac4[ipfcand];
+	   tlv_pf_sum_hcal5+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac5[ipfcand];
+	   tlv_pf_sum_hcal6+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac6[ipfcand];
+	   tlv_pf_sum_hcal7+=tlv_pf*PFParHcalEnergyFrac[ipfcand]*PFParHcalFrac7[ipfcand];
+	   if (fabs(PFParPdgId[ipfcand])<=3) has_charge=true;
+	   if (fabs(PFParPdgId[ipfcand])==4) has_photon=true;
+	   if (debug) { 
+	     printf("  ipfcand,pt,eta,phi: %4d %8.2f %8.2f %8.2f %8.2f %5d\n",ipfcand,PFParPt[ipfcand],PFParEta[ipfcand],PFParPhi[ipfcand],PFParM[ipfcand],PFParPdgId[ipfcand]);
+	     std::cout << PFParTrackPt[ipfcand] << " " << PFParEcalEnergyFrac[ipfcand] << " "
+		       << PFParHcalEnergyFrac[ipfcand] << " " << PFParHOEnergyFrac[ipfcand] << std::endl;
+	   } // debug
+	 }   // matched to gen par
+       }     // loop over PF candidates   
+
+       if (has_charge) continue; // don't want to use this K0L that has a matched charged PF candidate
+
+       pf_pt  = tlv_pf_sum.Pt();
+       pf_e   = tlv_pf_sum.E();
+       pf_eta = tlv_pf_sum.Eta();
+       pf_phi = tlv_pf_sum.Phi();
+       pf_ecalFrac  = tlv_pf_sum_ecal.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac  = tlv_pf_sum_hcal.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac1 = tlv_pf_sum_hcal1.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac2 = tlv_pf_sum_hcal2.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac3 = tlv_pf_sum_hcal3.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac4 = tlv_pf_sum_hcal4.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac5 = tlv_pf_sum_hcal5.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac6 = tlv_pf_sum_hcal6.Pt()/tlv_pf_sum.Pt();
+       pf_hcalFrac7 = tlv_pf_sum_hcal7.Pt()/tlv_pf_sum.Pt();
+       if (debug) {
+	 if (fabs(tlv_pf_sum.Eta())>2.5) std::cout << npf << std::endl;
+       }
+	 
+       // plotting
+       std::string strtmp;
+       if (fabs(GenParEta[ipar])<1.0){
+	 strtmp = "PFTask_response_vs_pt_eta0to1";
+	 fill1DProf(v_hist, strtmp, GenParPt[ipar],tlv_pf_sum.Pt()/GenParPt[ipar]);
+	 strtmp = "PFTask_response_vs_pt_eta0to1_PFK0L";
+	 if (!has_photon) fill1DProf(v_hist, strtmp, GenParPt[ipar],tlv_pf_sum.Pt()/GenParPt[ipar]);
+       }
+       if (fabs(GenParEta[ipar])>1.4 && fabs(GenParEta[ipar])<2.2){
+	 strtmp = "PFTask_response_vs_pt_eta14to22";	 
+	 fill1DProf(v_hist, strtmp, GenParPt[ipar],tlv_pf_sum.Pt()/GenParPt[ipar]);
+	 strtmp = "PFTask_response_vs_pt_eta14to22_PFK0L";	 
+	 if (!has_photon) fill1DProf(v_hist, strtmp, GenParPt[ipar],tlv_pf_sum.Pt()/GenParPt[ipar]);
+       }
+       if (fabs(GenParEta[ipar])>2.5 && fabs(GenParEta[ipar])<2.8){
+	 strtmp = "PFTask_response_vs_pt_eta25to28";	 
+	 fill1DProf(v_hist, strtmp, GenParPt[ipar],tlv_pf_sum.Pt()/GenParPt[ipar]);
+	 strtmp = "PFTask_response_vs_pt_eta25to28_PFK0L";	 
+	 if (pf_ecalFrac<0.01) fill1DProf(v_hist, strtmp, GenParPt[ipar],tlv_pf_sum.Pt()/GenParPt[ipar]);
+       }
+
+       npf=Npf;
+       npf_nh=Npf_nh;
+       
+       if (pf_pt>0.) t1.Fill(); // fill tree
+       
+     } // GenK0L
+     } // gen particle loop
+
      //--------------------
      // Loop over PF candidates
      //--------------------
@@ -567,6 +607,9 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
    // output file for histograms
    TFile file_out(outfile,"RECREATE");
    
+   t1.Write();     
+   //outputFile2->Close();
+   
    v_hist->Write();
    
    file_out.ls();
@@ -578,7 +621,8 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
 // Main function
 //
 //void ana_PFStudy_TMVA(TString rootfile="relval_ttbar_2018_pmx25ns.root",TString outfile="pfstudy_histograms.root",int maxevents=-1)
-void ana_PFStudy_TMVA(TString rootfile="relval_ttbar_2018_pmx25ns.root",TString outfile="pfstudy_histograms.root",int maxevents=100)
+//void ana_PFStudy_TMVA(TString rootfile="relval_ttbar_2018_pmx25ns.root",TString outfile="pfstudy_histograms.root",int maxevents=100)
+void ana_PFStudy_TMVA(TString rootfile="filelist_K0L.txt",TString outfile="pfstudy_histograms_K0S.root",int maxevents=-1)
 {
   PFCheckRun(rootfile, outfile, maxevents, 0);
 }
@@ -732,6 +776,20 @@ void bookHistograms(TList *v_hist)
   book1DProf(v_hist, histo, 7, 0.5,7.5, -1., 2., "S");
   sprintf(histo,"PFTask_hcalProfile_NeutralHadron_Endcap_PtBelow1");
   book1DProf(v_hist, histo, 7, 0.5,7.5, -1., 2., "S");
+
+  sprintf(histo,"PFTask_response_vs_pt_eta0to1");
+  book1DProf(v_hist, histo, 20, 0., 200., -1., 2., "S");
+  sprintf(histo,"PFTask_response_vs_pt_eta14to22");	 
+  book1DProf(v_hist, histo, 20, 0., 200., -1., 2., "S");
+  sprintf(histo,"PFTask_response_vs_pt_eta25to28");	 
+  book1DProf(v_hist, histo, 20, 0., 200., -1., 2., "S");
+  
+  sprintf(histo,"PFTask_response_vs_pt_eta0to1_PFK0L");
+  book1DProf(v_hist, histo, 20, 0., 200., -1., 2., "S");
+  sprintf(histo,"PFTask_response_vs_pt_eta14to22_PFK0L");	 
+  book1DProf(v_hist, histo, 20, 0., 200., -1., 2., "S");
+  sprintf(histo,"PFTask_response_vs_pt_eta25to28_PFK0L");	 
+  book1DProf(v_hist, histo, 20, 0., 200., -1., 2., "S");
   
 }
 //

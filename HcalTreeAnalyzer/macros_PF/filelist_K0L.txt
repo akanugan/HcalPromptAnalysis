@@ -1,0 +1,10 @@
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_0_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_1_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_2_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_3_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_4_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_5_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_6_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_7_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_8_v01.root
+root://kodiak-se.baylor.edu//store/user/hatake/condor/outputs/trees_relval_singleK0L_2019_numEvent2000_CMSSW_10_3_0_pre6_v04_9_v01.root

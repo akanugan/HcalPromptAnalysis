@@ -9,7 +9,7 @@ echo "source done"
 #
 # TO BE CHECKED before submission
 #
-setenv MYCMSSW CMSSW_10_2_0_pre3 ## <========= TO BE CHECKED
+setenv MYCMSSW CMSSW_10_3_0_pre6_v04 ## <========= TO BE CHECKED
 setenv VERSION v01
 #
 #
@@ -31,7 +31,7 @@ ls -R
 cd ${MYCMSSW}/src
 scramv1 b ProjectRename
 eval `scramv1 runtime -csh` # cmsenv is an alias not on the workers
-cmsRun ../../run_HcalTupleMaker_2018_MCfull.py maxEvents=2000 skipEvents=`echo ${1}\*2000|bc`
+cmsRun ../../run_HcalTupleMaker_2019_PF.py maxEvents=2000 skipEvents=`echo ${1}\*2000|bc`
 foreach f (`ls *trees*.root`)
    echo $f
    set name=`basename $f .root`

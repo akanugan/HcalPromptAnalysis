@@ -8,7 +8,7 @@ config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
-config.JobType.psetName = 'step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PAT.py'
+config.JobType.psetName = 'step3_RAW2DIGI_L1Reco_RECO_RECOSIM_EI_PAT.py'
 config.JobType.allowUndistributedCMSSW = True
 config.JobType.outputFiles=['step3.root','step3_inMINIAODSIM.root']
 
@@ -17,7 +17,7 @@ config.JobType.maxMemoryMB = 3000
 config.section_("Data")
 # MC example
 config.Data.inputDBS = 'https://cmsweb.cern.ch/dbs/prod/phys03/DBSReader/'
-config.Data.inputDataset = '/TTbar_14TeV/hatake-CMSSW_10_3_0_pre1_Step2_v1-e2d1acbf74ca91e32c5b428e85349090/USER'
+config.Data.inputDataset = '/SingleK0L/hatake-CMSSW_10_3_0_pre6_Step2_v1-846a642314dcc4ef3ea99a82b4cfab59/USER'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 2
 #KH config.Data.totalUnits = 100
