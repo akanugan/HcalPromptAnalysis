@@ -13,8 +13,6 @@ import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing ('analysis')
 process = cms.Process("Trees",eras.Run2_2018)
 
-
-
 ##
 ## Setup command line options
 ##
@@ -114,6 +112,7 @@ process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HODigis_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HcalTriggerPrimitives_cfi")
 
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFCandidates_cfi")
+process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFCluster_cfi")
 
 #------------------------------------------------------------------------------------
 # Specify Global Tag
@@ -139,6 +138,7 @@ process.tuple_step = cms.Sequence(
     process.hcalTupleGenParticles*
     #
     process.tuplePFCandidates*
+    process.tuplePFCluster*
     #
     process.hcalTupleTree
 )

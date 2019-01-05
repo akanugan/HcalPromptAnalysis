@@ -11,6 +11,12 @@
 #include "HcalPromptAnalysis/HcalTreeMaker/interface/HcalTupleMaker_GenParticles.h"
 #include "HcalPromptAnalysis/HcalTreeMaker/interface/HcalTupleMaker_HcalTriggerPrimitives.h"
 #include "HcalPromptAnalysis/HcalTreeMaker/interface/TupleMaker_PFCandidates.h"
+#include "HcalPromptAnalysis/HcalTreeMaker/interface/TupleMaker_GenJets.h"
+#include "HcalPromptAnalysis/HcalTreeMaker/interface/TupleMaker_GenMet.h"
+#include "HcalPromptAnalysis/HcalTreeMaker/interface/TupleMaker_PFJets.h"
+#include "HcalPromptAnalysis/HcalTreeMaker/interface/TupleMaker_PFMet.h"
+#include "HcalPromptAnalysis/HcalTreeMaker/interface/TupleMaker_PFCluster.h"
+
 
 DEFINE_FWK_MODULE(HcalTupleMaker_Tree);
 DEFINE_FWK_MODULE(HcalTupleMaker_Event);
@@ -26,3 +32,8 @@ DEFINE_FWK_MODULE(HcalTupleMaker_QIE10Digis);
 DEFINE_FWK_MODULE(HcalTupleMaker_QIE11Digis);
 DEFINE_FWK_MODULE(HcalTupleMaker_HcalTriggerPrimitives);
 DEFINE_FWK_MODULE(TupleMaker_PFCandidates);
+DEFINE_FWK_MODULE(TupleMaker_GenJets);
+DEFINE_FWK_MODULE(TupleMaker_GenMet);
+DEFINE_FWK_MODULE(TupleMaker_PFJets);
+DEFINE_FWK_MODULE(TupleMaker_PFMet);
+DEFINE_FWK_MODULE(TupleMaker_PFCluster);
