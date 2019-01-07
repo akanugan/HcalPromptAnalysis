@@ -114,8 +114,9 @@ process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HcalTriggerPrimiti
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFCandidates_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFCluster_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_GenJets_cfi")
-
-
+process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_GenMet_cfi")
+process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFJets_cfi")
+process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFMet_cfi")
 
 #------------------------------------------------------------------------------------
 # Specify Global Tag
