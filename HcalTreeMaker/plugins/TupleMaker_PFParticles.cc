@@ -37,7 +37,7 @@ TupleMaker_PFCandidates::TupleMaker_PFCandidates(const edm::ParameterSet& iConfi
     pflowToken_ = consumes<std::vector<reco::PFCandidate> >(inputTag);
   }
 
-  debug=true;
+  debug=false;
   
 }
 
