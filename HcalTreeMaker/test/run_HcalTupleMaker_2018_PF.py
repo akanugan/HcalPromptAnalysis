@@ -22,7 +22,7 @@ options.register ('isMINIAOD', False, VarParsing.VarParsing.multiplicity.singlet
 ##
 ## Default
 ##
-options.maxEvents = 11 # -1 means all events
+options.maxEvents = -1 # -1 means all events
 #options.skipEvents = 0 # default is 0.
 
 ##
@@ -46,8 +46,8 @@ if options.isMINIAOD:
 # GEN-SIM-RECO
 else:
     #options.inputFiles = '/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/7C1DE9C4-2CDF-6745-9636-A49AF087FDF8.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/571D7C0D-EB5B-AC4B-8D5A-353C2A1E5984.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/EE898FC9-66FA-5044-96D6-82CFC22F847F.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/81CF7193-F950-C44F-A164-94DEF2E788FF.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/0671F9F2-0539-5549-BAFF-1356C29BE98C.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/21369212-DA68-8A41-8176-5D2C6A0E1B12.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/D55D802E-CABC-4747-B288-784330B17B80.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/286A33FA-698B-084B-9521-AB48E9AAA8E8.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/CC74C106-6A60-4143-8734-1AF16F588FAA.root'
-    options.inputFiles = ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/777544FF-FDFA-D646-BDB6-817029C818D9.root  '
-    options.outputFile = 'relval_SinglePi_2018_E50HCALx.root'
+    options.inputFiles = ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/777544FF-FDFA-D646-BDB6-817029C818D9.root  ',' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/E5574E05-857D-564E-92F2-70632326EDE6.root ', ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/C242E214-D406-8A41-B4A8-911F960DADB7.root '
+    options.outputFile = 'relval_SinglePi_2018_E50HCAL.root'
 #
 #
 #
@@ -105,6 +105,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_Tree_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_Event_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_GenParticles_cfi")
+process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HcalSimHits_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HBHERecHits_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HBHEDigis_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HFDigis_cfi")
@@ -140,12 +141,14 @@ process.tuple_step = cms.Sequence(
     process.hcalTupleHBHERecHits*
     # Make HCAL tuples: gen info
     process.hcalTupleGenParticles*
+    process.hcalTupleHcalSimHits*
     #
     #process.tuplePFClusterHGCal*
     #process.tuplePFClusterHGCalFromMultiCL*
     process.tuplePFClusterHO*
     #process.tuplePFClusterHBHE*
     process.tuplePFClusterHF*
+    process.tuplePFCandidates*
     process.tuplePFClusterPS*
     process.tuplePFClusterHCAL*
     process.tuplePFClusterECAL*
