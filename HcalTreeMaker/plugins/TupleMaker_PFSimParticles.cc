@@ -23,7 +23,8 @@
 
 #include "Geometry/CaloGeometry/interface/CaloGeometry.h"
 #include "Geometry/Records/interface/CaloGeometryRecord.h"
-
+#include "DataFormats/ParticleFlowReco/interface/PFTrack.h"
+#include "DataFormats/ParticleFlowReco/interface/PFTrajectoryPointFwd.h"
 
 #include <TROOT.h>
 #include <TVector3.h>
@@ -33,22 +34,19 @@ TupleMaker_PFSimParticles::TupleMaker_PFSimParticles(const edm::ParameterSet& iC
   inputTag    (iConfig.getUntrackedParameter<edm::InputTag>("source")),
   prefix      (iConfig.getUntrackedParameter<std::string>  ("Prefix")),
   suffix      (iConfig.getUntrackedParameter<std::string>  ("Suffix"))
-  stime       (iConfig.getUntrackedParameter<bool>("PFSimParticleCollection"))
 {
 
   produces< std::vector< double > >(prefix + "Pt"  + suffix );
   produces< std::vector< double > >(prefix + "Eta" + suffix );
   produces< std::vector< double > >(prefix + "Phi" + suffix );
-  produces< std::vector< double > >(prefix + "M"   + suffix );
+  //  produces< std::vector< double > >(prefix + "M"   + suffix );
 
-  produces< std::vector< int > >(prefix + "PdgId" + suffix );
-  produces< std::vector< int > >(prefix + "Status" + suffix );
+  //  produces< std::vector< int > >(prefix + "PdgId" + suffix );
+  //produces< std::vector< int > >(prefix + "Status" + suffix );
 
   // To be changed.
   //pflowToken_ = consumes<std::vector<reco::PFCandidate> >(inputTag);
-  if(stime){
- tokenPFSimParticles_ = consumes<std::vector<reco::PFSimParticleCollection> >(inputTag);
-  }
+  tokenPFSimParticles_ = consumes<reco::PFSimParticleCollection>(inputTag);
 
   debug=false;
   
@@ -59,25 +57,27 @@ void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetu
   std::unique_ptr<std::vector<double> >            pt                ( new std::vector<double>           ());
   std::unique_ptr<std::vector<double> >            eta               ( new std::vector<double>           ());
   std::unique_ptr<std::vector<double> >            phi               ( new std::vector<double>           ());
-  std::unique_ptr<std::vector<double> >            mass              ( new std::vector<double>           ());
+  //std::unique_ptr<std::vector<double> >            mass              ( new std::vector<double>           ());
 
-  std::unique_ptr<std::vector<int   > >            pdgid             ( new std::vector<int>              ());
-  std::unique_ptr<std::vector<int   > >            status            ( new std::vector<int>              ());
+  //std::unique_ptr<std::vector<int   > >            pdgid             ( new std::vector<int>              ());
+  //std::unique_ptr<std::vector<int   > >            status            ( new std::vector<int>              ());
 
   //
   //-----
   //
-  if(stime ) {
-    edm::Handle<std::vector<reco::<PFSimParticleCollection> > trueParticles;
+  if(isSimu) {
+    edm::Handle<reco::PFSimParticleCollection> trueParticles;
+    //edm::Handle<std::vector<reco::<PFSimParticleCollection> > trueParticles;;
     iEvent.getByToken(tokenPFSimParticles_, trueParticles);
  
     for (unsigned int i = 0; i < trueParticles->size(); i++) {
-      const reco::PFSimParticleCollection& c = trueParticles->at(i);
-    //reco::PFTrajectoryPoint::LayerType ecalEntrance = reco::PFTrajectoryPoint::ECALEntrance;
-    //const reco::PFTrajectoryPoint& tpatecal = ((*trueParticles)[0]).extrapolatedPoint( ecalEntrance );
-    // eta_ = tpatecal.positionREP().Eta();
-    // phi_ = tpatecal.positionREP().Phi();
-    // true_ = std::sqrt(tpatecal.momentum().Vect().Mag2());
+      //const reco::PFSimParticleCollection& c = trueParticles->at(i);
+
+      reco::PFTrajectoryPoint::LayerType ecalEntrance = reco::PFTrajectoryPoint::ECALEntrance;
+      const reco::PFTrajectoryPoint& tpatecal = ((*trueParticles)[i]).extrapolatedPoint( ecalEntrance );
+      eta->push_back( tpatecal.positionREP().Eta() );
+      phi->push_back( tpatecal.positionREP().Phi() );
+      pt->push_back( std::sqrt(tpatecal.momentum().Vect().Mag2()));
 
     // pt->push_back(c.pt());
     // eta->push_back(c.eta());
@@ -86,14 +86,8 @@ void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetu
 
     // pdgid->push_back(c.pdgId());
     // status->push_back(c.status());
-      pt->push_back(c.pt());
-      eta->push_back(c.eta());
-      phi->push_back(c.phi());
-      mass->push_back(c.mass());
 
-      pdgid->push_back(c.pdgId());
-      status->push_back(c.status());
-
+    }
   }
   
   //
@@ -192,15 +186,15 @@ void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetu
   //
   //-----
   //
-  }
+
 
   iEvent.put(move( pt              ) , prefix + "Pt"            + suffix );
   iEvent.put(move( eta             ) , prefix + "Eta"           + suffix );
   iEvent.put(move( phi             ) , prefix + "Phi"           + suffix );
-  iEvent.put(move( mass            ) , prefix + "M"             + suffix );
+  //iEvent.put(move( mass            ) , prefix + "M"             + suffix );
 
-  iEvent.put(move( pdgid           ) , prefix + "PdgId"         + suffix );
-  iEvent.put(move( status          ) , prefix + "Status"        + suffix );
+  //iEvent.put(move( pdgid           ) , prefix + "PdgId"         + suffix );
+  //iEvent.put(move( status          ) , prefix + "Status"        + suffix );
 
 // iEvent.put(move( ecalEnergyFrac  ) , prefix + "EcalEnergyFrac"  + suffix );
 //iEvent.put(move( hcalEnergyFrac  ) , prefix + "HcalEnergyFrac"  + suffix );
@@ -216,5 +210,6 @@ void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetu
 // iEvent.put(move( hcalFrac7       ) , prefix + "HcalFrac7"  + suffix );
   
 }
+
 
 

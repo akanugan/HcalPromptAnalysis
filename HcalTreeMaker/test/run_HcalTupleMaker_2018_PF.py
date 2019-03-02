@@ -105,6 +105,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_Tree_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_Event_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_GenParticles_cfi")
+process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HcalSimHits_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HBHERecHits_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HBHEDigis_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.HcalTupleMaker_HFDigis_cfi")
@@ -140,6 +141,7 @@ process.tuple_step = cms.Sequence(
     process.hcalTupleHBHERecHits*
     # Make HCAL tuples: gen info
     process.hcalTupleGenParticles*
+    process.hcalTupleHcalSimHits*
     #
     #process.tuplePFClusterHGCal*
     #process.tuplePFClusterHGCalFromMultiCL*
