@@ -46,9 +46,10 @@ if options.isMINIAOD:
 # GEN-SIM-RECO
 else:
     #options.inputFiles = '/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/7C1DE9C4-2CDF-6745-9636-A49AF087FDF8.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/571D7C0D-EB5B-AC4B-8D5A-353C2A1E5984.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/EE898FC9-66FA-5044-96D6-82CFC22F847F.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/81CF7193-F950-C44F-A164-94DEF2E788FF.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/0671F9F2-0539-5549-BAFF-1356C29BE98C.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/21369212-DA68-8A41-8176-5D2C6A0E1B12.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/D55D802E-CABC-4747-B288-784330B17B80.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/286A33FA-698B-084B-9521-AB48E9AAA8E8.root','/store/relval/CMSSW_10_3_0_pre4/RelValTTbar_13/GEN-SIM-RECO/PUpmx25ns_103X_upgrade2018_realistic_v4-v1/20000/CC74C106-6A60-4143-8734-1AF16F588FAA.root'
-    options.inputFiles = ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/777544FF-FDFA-D646-BDB6-817029C818D9.root  ',' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/E5574E05-857D-564E-92F2-70632326EDE6.root ', ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/C242E214-D406-8A41-B4A8-911F960DADB7.root '
-    options.secondaryInputFiles = '/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/F0464AF6-54D1-4746-9727-35EA79651016.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/EF56CCB1-2C06-3F4D-9C18-0F6A99682718.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/D0FC064C-B392-3545-B906-0582CE047039.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/96657479-EBDA-2146-90F0-2C47C1B472C6.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/71BC21BC-C71D-AF43-835D-6225DCA13405.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/5037B705-CDCF-1246-B0B3-B3E3B44DCF49.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/43D4DA24-FF21-FB4E-9D5A-C98225B716A9.root ',' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/42945BED-63E9-7949-917E-AB04F24C35EF.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/3DBD5CD0-23F7-7A45-91E4-DBF71DAE4C4D.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/0937D0D4-10C3-D049-A8C8-B673BDB7B291.root '
-    options.outputFile = 'relval_SinglePi_2018_E50HCAL_full.root'
+ #   options.inputFiles = ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/777544FF-FDFA-D646-BDB6-817029C818D9.root  ',' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/E5574E05-857D-564E-92F2-70632326EDE6.root ', ' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-RECO/103X_upgrade2018_realistic_v8_rsb-v1/20000/C242E214-D406-8A41-B4A8-911F960DADB7.root '
+#    options.secondaryInputFiles = '/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/F0464AF6-54D1-4746-9727-35EA79651016.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/EF56CCB1-2C06-3F4D-9C18-0F6A99682718.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/D0FC064C-B392-3545-B906-0582CE047039.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/96657479-EBDA-2146-90F0-2C47C1B472C6.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/71BC21BC-C71D-AF43-835D-6225DCA13405.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/5037B705-CDCF-1246-B0B3-B3E3B44DCF49.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/43D4DA24-FF21-FB4E-9D5A-C98225B716A9.root ',' /store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/42945BED-63E9-7949-917E-AB04F24C35EF.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/3DBD5CD0-23F7-7A45-91E4-DBF71DAE4C4D.root ','/store/relval/CMSSW_10_4_0_pre4/RelValSinglePiE50HCAL/GEN-SIM-DIGI-RAW/103X_upgrade2018_realistic_v8_rsb-v1/20000/0937D0D4-10C3-D049-A8C8-B673BDB7B291.root '
+    options.inputFiles = 'root://cmseos.fnal.gov//eos/uscms/store/user/hcal_upgrade/hatake/step3/PGun_step3_RECO_10_4_0_E2_500_v5/SinglePi/PGun_step3_RECO_10_4_0_E2_500_v5/190120_223058/0000/step3_101.root'
+    options.outputFile = 'relval_SinglePi_2018_E50HCAL_pfsimpar.root'
 #
 #
 #
@@ -120,7 +121,8 @@ process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_GenJets_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_GenMet_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFJets_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFMet_cfi")
-process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFSimPartilces_cfi")
+process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFSimParticles_cfi")
+process.load("RecoParticleFlow.PFProducer.particleFlowSimParticle_cfi")
 
 #------------------------------------------------------------------------------------
 # Specify Global Tag
@@ -155,6 +157,8 @@ process.tuple_step = cms.Sequence(
     process.tuplePFCandidates*
     process.tuplePFClusterPS*
     process.tuplePFClusterHCAL*
+
+
     process.tuplePFClusterECAL*
     process.tuplePFMet*
     process.tuplePFJets*
@@ -163,6 +167,10 @@ process.tuple_step = cms.Sequence(
     process.tuplePFSimParticles*
     #
     process.hcalTupleTree
+)
+
+process.genReReco = cms.Sequence(
+    process.particleFlowSimParticle
 )
 
 #
@@ -186,3 +194,5 @@ if options.isMINIAOD:
 process.preparation = cms.Path(
     process.tuple_step
 )
+process.gRR = cms.EndPath(process.genReReco)
+process.schedule = cms.Schedule(process.gRR,process.preparation)
