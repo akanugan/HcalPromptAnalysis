@@ -36,7 +36,7 @@ TupleMaker_PFSimParticles::TupleMaker_PFSimParticles(const edm::ParameterSet& iC
   suffix      (iConfig.getUntrackedParameter<std::string>  ("Suffix"))
 {
 
-  produces< std::vector< double > >(prefix + "Pt"  + suffix );
+  produces< std::vector< double > >(prefix + "P"  + suffix );
   produces< std::vector< double > >(prefix + "Eta" + suffix );
   produces< std::vector< double > >(prefix + "Phi" + suffix );
   //  produces< std::vector< double > >(prefix + "M"   + suffix );
@@ -54,7 +54,7 @@ TupleMaker_PFSimParticles::TupleMaker_PFSimParticles(const edm::ParameterSet& iC
 
 void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetup& iSetup){
 
-  std::unique_ptr<std::vector<double> >            pt                ( new std::vector<double>           ());
+  std::unique_ptr<std::vector<double> >            P                ( new std::vector<double>           ());
   std::unique_ptr<std::vector<double> >            eta               ( new std::vector<double>           ());
   std::unique_ptr<std::vector<double> >            phi               ( new std::vector<double>           ());
   //std::unique_ptr<std::vector<double> >            mass              ( new std::vector<double>           ());
@@ -77,7 +77,7 @@ void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetu
       const reco::PFTrajectoryPoint& tpatecal = ((*trueParticles)[i]).extrapolatedPoint( ecalEntrance );
       eta->push_back( tpatecal.positionREP().Eta() );
       phi->push_back( tpatecal.positionREP().Phi() );
-      pt->push_back( std::sqrt(tpatecal.momentum().Vect().Mag2()));
+      P->push_back( std::sqrt(tpatecal.momentum().Vect().Mag2()));
 
     // pt->push_back(c.pt());
     // eta->push_back(c.eta());
@@ -188,7 +188,7 @@ void TupleMaker_PFSimParticles::produce(edm::Event& iEvent, const edm::EventSetu
   //
 
 
-  iEvent.put(move( pt              ) , prefix + "Pt"            + suffix );
+  iEvent.put(move( P              ) , prefix + "P"            + suffix );
   iEvent.put(move( eta             ) , prefix + "Eta"           + suffix );
   iEvent.put(move( phi             ) , prefix + "Phi"           + suffix );
   //iEvent.put(move( mass            ) , prefix + "M"             + suffix );

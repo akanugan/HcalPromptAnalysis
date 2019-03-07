@@ -122,7 +122,14 @@ process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_GenMet_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFJets_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFMet_cfi")
 process.load("HcalPromptAnalysis.HcalTreeMaker.TupleMaker_PFSimParticles_cfi")
+
+#-----------
+
 process.load("RecoParticleFlow.PFProducer.particleFlowSimParticle_cfi")
+from FastSimulation.Event.ParticleFilter_cfi import  ParticleFilterBlock
+process.particleFlowSimParticle.ParticleFilter = ParticleFilterBlock.ParticleFilter.copy()
+process.particleFlowSimParticle.ParticleFilter.chargedPtMin = cms.double(0.0)
+process.particleFlowSimParticle.ParticleFilter.EMin = cms.double(0.0)
 
 #------------------------------------------------------------------------------------
 # Specify Global Tag
@@ -194,5 +201,12 @@ if options.isMINIAOD:
 process.preparation = cms.Path(
     process.tuple_step
 )
-process.gRR = cms.EndPath(process.genReReco)
+process.gRR = cms.Path(process.genReReco)
 process.schedule = cms.Schedule(process.gRR,process.preparation)
+#process.schedule = cms.Schedule(process.preparation)
+
+###-- Dump config ------------------------------------------------------------
+file = open('allDump_cfg.py','w')
+file.write(str(process.dumpPython()))
+file.close()
+
