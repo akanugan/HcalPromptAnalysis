@@ -217,10 +217,6 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
    //---------------------------------------------------------------------------------------------------------
 
    int ievent=0;
-   double PFSimParPtMax1 =0;
-   double PFSimParPtMax2 =0;
-   double PFSimParEtaMax1 =0;
-   double PFSimParPhiMax1 =0;
    
    while (fReader.Next()) {
   
@@ -237,8 +233,15 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
      TLorentzVector v_pfsim_max;
      v_pfsim.SetPtEtaPhiM(0,0,0,0);
      v_pfsim_max.SetPtEtaPhiM(0,0,0,0);
+
+     double PFSimParPtMax1 =0;
+     double PFSimParPtMax2 =0;
+     double PFSimParEtaMax1 =0;
+     double PFSimParPhiMax1 =0;
+     int index_pfsim_max = -1;
      //if(SimTracksPt.GetSize() != 2) continue;     
 
+     // PF sim particle loop -- first
      for (int ipfsim = 0, npfsim = PFSimParPt.GetSize(); ipfsim<npfsim; ++ipfsim){
        if (fabs(PFSimParEta[ipfsim])>2.4) continue;
        if (PFSimParPt[ipfsim]<20) continue;
@@ -248,10 +251,17 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
 	 PFSimParPtMax1 = PFSimParPt[ipfsim];
 	 PFSimParEtaMax1 = PFSimParEta[ipfsim];
 	 PFSimParPhiMax1 = PFSimParPhi[ipfsim];
+	 index_pfsim_max = ipfsim;
        }
 
-       
+     }       
+     // 
 
+     // PF sim particle loop - 2nd
+     for (int ipfsim = 0, npfsim = PFSimParPt.GetSize(); ipfsim<npfsim; ++ipfsim){
+       if (fabs(PFSimParEta[ipfsim])>2.4) continue;
+       if (PFSimParPt[ipfsim]<20) continue;
+      
        double dR = .1;
        double dRmin = 1.; // dummy. big value.
        v_pfsim.SetPtEtaPhiM(PFSimParPt[ipfsim],PFSimParEta[ipfsim],PFSimParPhi[ipfsim],0);
@@ -268,7 +278,6 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
        bool cHad = false;
        bool cHad_nHad = false;
        
-
        /*
        for (int isimhits = 0, nsimhits =  HcalSimHitsEta.GetSize(); isimhits < nsimhits; ++isimhits) {
 	 if (deltaR_simhits <= 0.1){
@@ -296,20 +305,18 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
 	   
 	 }
 
-	 if (v_temp.DeltaR(v_pfsim_max) < dR) {
-	   fill1D(v_hist, "All PF with 1 Sim Par", (v_pf_all.Pt()-v_pfsim_max.Pt())/v_pfsim_max.Pt());
-	 }
-
        }//  } // loop-over PF candidate ends
        if (fabs(PFParPdgId_dRmin) == 1) cHad = true;
        
-
        if (cHad){
 	 fill1D(v_hist, "All PFPar Response", (v_pf_all.Pt()-v_pfsim.Pt())/v_pfsim.Pt());
 	 fill1D(v_hist, "cHad_nHad  Response", (v_pf_ch_nh.Pt()-v_pfsim.Pt())/v_pfsim.Pt());
 	 fill1D(v_hist, "dRmin Response", (v_pf_dRmin.Pt()-v_pfsim.Pt())/v_pfsim.Pt());
-
 	 
+	 if (ipfsim==index_pfsim_max) {
+	   fill1D(v_hist, "All PF with 1 Sim Par", (v_pf_all.Pt()-v_pfsim_max.Pt())/v_pfsim_max.Pt());
+	 }
+
 	 /*
 	 if (debug) {
 	 if ((v_pf_all.Pt()-v_gen.Pt())/v_gen.Pt()<-0.5) {
@@ -330,12 +337,8 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
        } //   if cHad
 	 */
        
-       }
+       } // closing cHad
      
-   
-
-
-
        /*
        strtmp = "PFTask_hcalFrac1Zero_vs_pt";
        float zero1=0.;
@@ -677,6 +680,7 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
      } // PF candidiate loop
      
        */
+     }
    }
    // Event loop ends
    //---------------------------------------------------------------------------------------------------------
@@ -691,9 +695,7 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
    file_out.ls();
    file_out.Close();
 
-   }
 }
-
 
 //
 // Main function
