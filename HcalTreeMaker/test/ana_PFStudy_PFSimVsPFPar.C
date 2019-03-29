@@ -265,7 +265,7 @@ void PFCheckRun(TString rootfile, TString outfile, int maxevents=-1, int option=
        double dR = .1;
        double dRmin = 1.; // dummy. big value.
        v_pfsim.SetPtEtaPhiM(PFSimParPt[ipfsim],PFSimParEta[ipfsim],PFSimParPhi[ipfsim],0);
-       v_pfsim_max.SetPtEtaPhiM(PFSimParPtMax1,PFSimParEtaMax1,PFSimParPhiMax1,0);
+       //v_pfsim_max.SetPtEtaPhiM(PFSimParPtMax1,PFSimParEtaMax1,PFSimParPhiMax1,0);
        printf("PFSimMAX pt,eta,phi: %8.3f, %8.3f, %8.3f \n",v_pfsim_max.Pt(),v_pfsim_max.Eta(),v_pfsim_max.Phi());
        TLorentzVector v_temp;
        TLorentzVector v_pf_all;
